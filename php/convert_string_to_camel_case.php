@@ -13,4 +13,3 @@ function toCamelCase($str){
     return implode($newStr);
 }
 
-echo toCamelCase("the-stealth-warrior");
