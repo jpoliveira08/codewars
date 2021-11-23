@@ -8,6 +8,4 @@ function divisors($n) {
         }
     }
     return $count;
-  }
-
-echo divisors(30);
+}
