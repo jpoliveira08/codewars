@@ -1,43 +1,49 @@
 <?php
-/**
- * Sort of Quick Sort implementation
- */
-function solution($nums) {
 
-    quicksort($nums, 0, count($nums) - 1);
-    
+function solution($nums)
+{
+    if($nums == null || empty($nums)){
+        return [];
+    }
+    quickSort($nums, 0, count($nums) - 1);
     return $nums;
 }
-function troca($nums, int $i, int $j){
-    $aux= $nums[$i];
-    $nums[$i] = $nums[$j];
-    $nums[$j];
-}
-function particao($nums, int $p, int $r){
-    $pivo = $nums[intval(($p+$r) / 2)];
-    $i = $p - 1;
-    $j = $r + 1;
-    while($i < $j)
-    {
-        do{
-            $j = $j - 1;
-        }
-        while($nums[$j] > $pivo);
-        do{
-            $i = $i + 1;
-        }
-        while($nums[$i] < $pivo);
-        if($i < $j) troca($nums, $i, $j);
-    }
-    return $j;
-}
-function quicksort($nums, int $p, int $r)
+
+function quickSort(&$array, $lowOrig, $highOrig)
 {
-    if($p < $r){
-        $q = particao($nums, $p, $r);
-        quicksort($nums, $p, $q);
-        quicksort($nums, $q+1, $r);
+    if(count($array) < 2){
+        return;
+    }
+    $pivot = $array[($lowOrig + $highOrig) / 2];
+
+    $low = $lowOrig;
+    $high = $highOrig;
+
+    while($low <= $high){
+        while($array[$low] < $pivot){
+            $low++;
+        }
+
+        while($array[$high] > $pivot){
+            $high--;
+        }
+        if($low <= $high){
+            $temp = $array[$low];
+            $array[$low] = $array[$high];
+            $array[$high] = $temp;
+
+            $low++;
+            $high--;
+        }
+    }
+
+    if($lowOrig < $high){
+        quickSort($array, $lowOrig, $high);
+    }
+
+    if($low < $highOrig){
+        quickSort($array, $low, $highOrig);
     }
 }
 
-echo solution([5,8,3,1,6,2,4,9,7,5]);
+solution([5,8,3,1,6,2,4,9,7,5]);
