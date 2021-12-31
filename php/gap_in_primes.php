@@ -4,26 +4,21 @@ declare (strict_types = 1);
 
 function gap($g, $m, $n): ?array
 {
-    $arrayOfPrimes = [];
-
-    for ($i = $m; $i <= $n; $i++) {
-        if (isPrime($i)) {
-            array_push($arrayOfPrimes, $i);
+    for ($i=$m; $i <= $n - $g; $i++) { 
+        $cont = 0;
+        for ($j = ($i + $g); $j >= $i; $j--) { 
+            if (isPrime($j)) {
+                $cont++;
+            }
         }
-    }
-
-    return checkGap($arrayOfPrimes, $g);
-}
-print_r(gap(10,300,400));
-function checkGap(array $arrayOfPrimes, int $g): ?array
-{
-    for ($i=0; $i < count($arrayOfPrimes) - 2; $i++) {
-        if (($arrayOfPrimes[$i + 1] - $arrayOfPrimes[$i]) === $g) {
-            return [$arrayOfPrimes[$i], $arrayOfPrimes[$i + 1]];
+        if ($cont === 2 && isPrime($i) && isPrime($i + $g)) {
+            return [$i, ($i + $g)];
         }
-    }
-}
 
+    }
+    return null;
+}
+print_r(gap(10, 300, 400));
 function isPrime(int $number): bool
 {
     $cont = 0;
