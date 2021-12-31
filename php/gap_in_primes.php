@@ -1,35 +1,37 @@
 <?php
 
-declare (strict_types = 1);
-
-function gap($g, $m, $n): ?array
+function gap($g, $m, $n)
 {
-    for ($i=$m; $i <= $n - $g; $i++) { 
-        $cont = 0;
-        for ($j = ($i + $g); $j >= $i; $j--) { 
-            if (isPrime($j)) {
-                $cont++;
-            }
-        }
-        if ($cont === 2 && isPrime($i) && isPrime($i + $g)) {
-            return [$i, ($i + $g)];
-        }
+    $arrayOfPrimes = [];
 
-    }
-    return null;
-}
-print_r(gap(10, 300, 400));
-function isPrime(int $number): bool
-{
-    $cont = 0;
-    for ($i=$number; $i > 0; $i--) { 
-        if ($number % $i === 0) {
-            $cont++;
+    for ($i = $m; $i <= $n; $i++) {
+        if (isPrime($i)) {
+            array_push($arrayOfPrimes, $i);
         }
     }
-    if ($cont === 2) {
-        return true;
-    }
-    return false;
+
+    return checkGap($arrayOfPrimes, $g);
 }
+
+function checkGap(array $arrayOfPrimes, int $g)
+{
+    for ($i=0; $i < count($arrayOfPrimes) - 2; $i++) {
+        if (($arrayOfPrimes[$i + 1] - $arrayOfPrimes[$i]) === $g) {
+            return [$arrayOfPrimes[$i], $arrayOfPrimes[$i + 1]];
+        }
+    }
+}
+
+function isPrime($number)
+{
+    if ($number == 1)
+    return 0;
+     
+    for ($i = 2; $i <= sqrt($number); $i++){
+        if ($number % $i == 0)
+            return 0;
+    }
+    return 1;
+}
+
 
