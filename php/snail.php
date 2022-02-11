@@ -2,7 +2,7 @@
 
 function snail(array $array): array
 {
-    if (empty($array)) {
+    if (empty($array) || empty($array[0])) {
         return [];
     }
     $snailToLine = [];
