@@ -1,15 +1,38 @@
 <?php
 
-function snail(array $array)
+function snail(array $array): array
 {
     if (empty($array)) {
         return [];
     }
     $snailToLine = [];
+    $snailToLine = recursive($array);
+    if (count($array) < 3) {
+        return $snailToLine;
+    }
+    $combined = [];
 
-    return $snailToLine;
+    if ((count(teste($array)) > 0)) {
+        $combined = array_merge($snailToLine, snail(teste($array)));
+    }
+
+    return $combined;
 }
 
+function teste($array): array
+{
+    $newArray = [];
+    $arrayLength = count($array);
+    $tamanho = array_slice($array, 1, $arrayLength - 2);
+
+    for ($i=0; $i < count($tamanho); $i++) { 
+        for ($j=1; $j < count($tamanho[$i]) - 1; $j++) { 
+            $newArray[$i][$j - 1] = $tamanho[$i][$j];
+        }
+    }
+    return $newArray;
+}
+ 
 function recursive(array $array): array
 {
     $firstArray = [];
@@ -37,15 +60,3 @@ function recursive(array $array): array
 
     return $firstArray;
 }
-
-function removeEdges(array $array): array
-{
-
-    return ;
-}
-$teste =[
-            [2, 3],
-            [9, 4],
-        ];
-
-print_r(snail($teste));
